@@ -98,7 +98,7 @@ dim(ess2014_df)
 
 summary(ess2014_df)
 
-head(ess2014_df$alcfreq) #6 first rows of the variable "Miles per galon"
+head(ess2014_df$alcfreq) #6 first rows of the variable "alcfreq"
 
 head(ess2014_df[ess2014_df$yrbrn < 1990, "cgtsday"])
 
@@ -134,8 +134,10 @@ my_ess2014dk <- read.table(file = "my_ess2014dk.csv", header = TRUE, sep = ",")
 
 library(ggplot2)
 
-ggplot(data = ess2014_df, aes(x = yrbrn, y = cgtsday, colour = gndr)) + 
+options(repr.plot.width=8, repr.plot.height=4)
+
+ggplot(data = ess2014_df, aes(x = yrbrn, y = height, colour = gndr)) + 
     geom_point(size = 1, position = "jitter")
 
-ggplot(data = ess2014_df, aes(x = yrbrn, y = happy, colour = gndr)) +
+ggplot(data = ess2014_df, aes(x = yrbrn, y = cgtsday, colour = gndr)) +
     geom_point(size = 1, position = "jitter")
