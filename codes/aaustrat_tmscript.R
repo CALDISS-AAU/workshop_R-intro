@@ -2,11 +2,12 @@ library(stringr)
 library(tm)
 library(wordcloud)
 library(pdftools)
+library(tidytext)
 
-data_path <- '//ADM.AAU.DK/Users/kgk/Documents/CALDISS/Aktiviteter/Workshopmateriale/R intro/data/'
+#data_path <- '//ADM.AAU.DK/Users/kgk/Documents/CALDISS/Aktiviteter/Workshopmateriale/R intro/data/'
 
-setwd(data_path)
-aau_strat <- pdf_text("aau_strategy_2016_2021.pdf")
+setwd("./my_folder")
+aau_strat <- pdf_text("AAU_strategy_2016_2021.pdf")
 
 wordveclist_convert <- function(text) { 
   text.v <- paste(text, collapse=" ")
@@ -19,10 +20,12 @@ wordveclist_convert <- function(text) {
   text.words.v <- gsub(".*[0-9]+", "", text.words.v)
   text.words.v <- gsub("_", "", text.words.v)     
   text.words.v <- text.words.v[which(text.words.v != "")]
+  text.words.v <- text.words.v[nchar(text.words.v) > 1]
   return(text.words.v)
 }
 
 aau_strat_wordvec <- wordveclist_convert(aau_strat)
-aau_strat_wordvec <- aau_strat_wordvec[!stopwords('en') %in% aau_strat_wordvec]
+aau_strat_wordvec <- aau_strat_wordvec[!aau_strat_wordvec %in% stopwords('en')]
 
-wordcloud(aau_strat_wordvec, colors = brewer.pal(8, 'Dark2'))
+wordcloud(words = aau_strat_wordvec, 
+          random.order = FALSE, colors = brewer.pal(20, 'BrBG'))
