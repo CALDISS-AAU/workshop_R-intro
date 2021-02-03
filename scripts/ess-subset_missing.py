@@ -9,4 +9,4 @@ df['ppltrst'] = df['ppltrst'].replace({'Most people can be trusted': 10, 'You ca
 df = df.replace({'Not applicable': np.nan, 'No answer': np.nan, 'Refusal': np.nan, 'Don\'t know': np.nan})
 
 savepath = os.path.join('C:/', 'data', 'ess', '2018', 'ESS2018DK_subset.csv')
-df.to_csv(savepath)
+df.to_csv(savepath, index = False)
