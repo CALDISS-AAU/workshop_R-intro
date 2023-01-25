@@ -1,0 +1,572 @@
+---
+format: 
+  beamer:
+    theme: AAUsimple
+    keep-tex: true  
+    fontsize: 10pt
+    header-includes: |
+      \def\tightlist{}
+      \usepackage[utf8]{inputenc}
+      \usepackage[english]{babel}
+      \usepackage[T1]{fontenc}
+      \usepackage{helvet}
+      \definecolor{caldissMain}{RGB}{153,47,135}
+      \setbeamercolor{AAUsimple}{bg=caldissMain}
+      \setbeamercolor{structure}{fg=caldissMain}
+      \setbeamercolor{frametitle}{bg=caldissMain}
+      \title{Introduktion til R}
+      \date{26. januar 2023}
+      \author{Kristian G. Kjelmann (\href{mailto:kgk@adm.aau.dk}{{\tt kgk@adm.aau.dk}})}
+      \institute{CALDISS\\
+        Det Samfundsvidenskabelige og Humanistiske Faultet, AAU
+      }
+      \pgfdeclareimage[height=1.5cm]{titlepagelogo}{AAUgraphics/caldiss_logo_symbol}
+      \titlegraphic{
+        \pgfuseimage{titlepagelogo}
+        }
+      \begin{document}
+        \begin{frame}[plain,noframenumbering]
+          \titlepage
+        \end{frame}
+editor: visual
+execute:
+  echo: true
+  warning: false
+  error: true
+---
+
+## Dagens program
+
+1.  Hvad er R?
+
+2. At arbejde med R sproget i RStudio
+
+3. Basiskoncepter i R (objekter, funktioner og klasser)
+
+4. Udvid hvad R kan med pakker
+
+5. Import af data
+
+6. Simple visualiseringer
+
+## Hvem er jeg?
+::: {.columns align="center"}
+::: {.column width="40%" align="center"}
+
+![](img/kgk.jpg){fig-align="left" width="80%"}
+:::
+::: {.column width="60%" align="center"}
+Kristian Kjelmann\
+\
+Ph.d. studerende ved sociologi\
+\
+Forskningssupport ved CALDISS\
+\
+Programmering, data science og machine learning (særligt med tekst)\
+\
+Brugt R siden 2016
+:::
+:::
+
+## Hvad er R?
+
+::: {.columns align="center"}
+::: {.column width="65%" align="center"}
+
+R er et gratis analyseprogram med sit eget kommandosprog/kodesprog.\
+\
+Programmet egner sig især til kvantitative analyser og visualiseringer af kvantitative data.\
+\
+R kan arbejde med mange forskellige dataformater. Da programmet er "open source", findes ufatteligt mange udvidelser til programmet, der tilføjer funktioner.
+
+:::
+::: {.column width="35%" align="center"}
+![](img/r-logo.png){fig-align="left" width="100%"}
+:::
+:::
+
+## Hvad er RStudio?
+
+::: {.columns align="center"}
+::: {.column width="50%"}
+
+![](img/rstudio-logo.png){fig-align="left" height="25%"}
+
+R i sig selv er meget begrænset. RStudio tilføjer en brugerflade ovenpå R, der gør det rarere at arbejde med.\
+\
+Man arbejder typisk i RStudio, når man bruger R.
+:::
+
+::: {.column width="50%"}
+### Fordele ved RStudio
+
+\
+Giver overblik over projektfiler\
+\
+Hjælper til at tilrette og fuldende kommandoer i script\
+\
+Overblik over aktivt miljø\
+\
+Hjælper med at importere data
+:::
+:::
+
+## Hvad er RStudio?
+
+![](img/rstudio.png){fig-align="center" width="90%"} *Source: [Cecilia Lee](https://cecilialee.github.io/blog/2017/12/05/intro-to-r-programming.html)*
+
+## R-sproget
+
+::: {.columns align="center"}
+::: {.column width="55%"}
+R fungerer ved at man skriver kommandoer i R sproget, som R derefter "fortolker".\
+\
+"Fortolkning" i R er blot et spørgsmål om R forstår, hvad du forsøger at gøre. Hvis R forstår det du beder om, gør R den ting. Hvis R ikke forstår det, får man en fejl.\
+\
+Al fortolkning i R foregår gennem R's konsol. I konsollen skriver man enten R kode direkte eller også sender man kode dertil fra et script (en tekstfil med R-kode).\
+:::
+
+::: {.column width="45%"}
+![](img/r-konsol.png){fig-align="center" width="100%"}
+:::
+:::
+
+## R-sproget
+
+::: {.columns align="center"}
+::: {.column width="50%"}
+### R som en veltrænet hund
+
+\
+Naiv\
+\
+Forstår kommandoer sagt på en bestemt måde\
+\
+Gør hvad du beder om\
+\
+Kan lære nye ting
+:::
+
+::: {.column width="50%"}
+![](img/r-dog-meet.jpg){fig-align="center" width="90%"}
+:::
+:::
+
+## R-sproget: Matematik i R
+
+| **Operator** | **Function**     |
+|--------------|------------------|
+| `+`          | Addition         |
+| `-`          | Subtraction      |
+| `*`          | Multiplication   |
+| `/`          | Division         |
+| `^`          | Exponentiation   |
+| `%%`         | Modulo           |
+| `%/%`        | Integer Division |
+
+
+## R-sproget: Objekter og funktioner
+
+R fungerer ved at lagre værdier og information i "objekter". Disse objekter kan derefter bruges i forskellige funktioner. Funktioner kan være alt fra at udregne et gennemsnit, lave en figur, gemme et datasæt osv.
+
+Forsimplet sagt: Et objekt er en eller anden lagret information, mens en funktion er noget, som kan bearbejde eller gøre noget ved informationen i et objekt.
+
+## Objekter
+
+At arbejde med R involverer kontinuerligt at definere objekter. Objekter er blot et navn til at kalde lagret information frem igen.
+
+Objekter kan være mange ting:
+
+    et ord
+    et tal
+    en talrække
+    et datasæt
+    en matematisk formel
+    et resultat
+    en filsti
+    en graf
+    og så videre...
+
+Når et objekt er defineret, er det tilgængeligt i det aktuelle "miljø".
+I R skal et miljø forstås som en samling af objekter og funktioner, som er til rådighed (defineret, "native" eller indlæst).
+
+
+## Objekter
+
+![](img/r-dog.png){fig-align="center" width="80%"}
+
+```{r}
+bolden <- 42
+```
+
+## Objekter
+
+![](img/conf-dog-text.png){fig-align="center" width="70%"}
+
+```{r}
+print(bold)
+```
+
+## Objekter
+
+![](img/dog-happy-text.png){fig-align="center" width="70%"}
+
+```{r}
+print(bolden)
+```
+
+
+## Vectors (enkeltvariable)
+
+En basal datastruktur i R er en vector.
+
+En vector er en række af værdier af den samme type (fx en række tal, en række ord osv.).
+
+Vectors dukker op i mange forskellige sammenhænge i R, da de bruges hver gang, at man skal angive en samling af flere værdier.
+
+Vectors laves med `c()` - fx `c(1, 2, 3)` (hver værdi adskilt med `,`).
+
+
+## R-sproget: R scripts
+
+Script-filer er tekst filer med kode, som R kan forstå ("fortolke").
+
+En script-fil kan forstås som en "analyseopskrift", der indeholder alle kommandoer nødvendige for at foretage en analyse. Det tillader også, at man nemt kan køre kommandoer igen.
+
+Man bør altid skrive de kommandoer, som er nødvendige for at lave analysen, ind i et script.
+
+Brug konsolvinduet til at finde frem til den rigtige kommando.
+
+`#` kan bruges til kommentarer (ignoreres når man kører koden)
+
+**BEMÆRK!** Der er ingen fortryd-knap i R! Når koden er kørt, er ændringen sket. Den eneste måde at "fortryde" er ved at genskabe det, som man har lavet, ved at køre tidligere kode igen. Netop derfor er scripts vigtige.
+
+
+## R Projekter og arbejdsstier
+
+Når man skal importere og eksportere filer i R, har R brug for at vide, hvor filer skal hentes fra og lægges.
+
+Dette holder R styr på med *filstier*. En *filsti* kan siges at være en addresse for, hvor en fil ligger på din computer.
+
+R arbejder med *arbejdsstier*. En *arbejdssti* er det sted, som R tager udgangspunkt i, når R skal finde eller gemme filer.
+
+Man kan tjekke sin nuværende arbejdssti med funktionen `getwd()`.
+
+Arbejdssti kan ændres med `setwd()` (eller i RStudio under Session -> Set Working Directory).
+
+
+## R Projekter og arbejdsstier
+
+Da man ofte bruger R i flere sammenhænge (fx en introduktion til R i dag, en analyseopgave i morgen), skifter man typisk arbejdssti afhængigt af, hvad man arbejder med.
+
+R Projekter i RStudio letter arbejdet med at skifte mellem arbejdsstier og finde rundt i filer.
+
+Et R Projekt er ikke andet end en mappe på din computer. I denne kan det være en god ide at samle datafiler, R kodefiler og andet relevant materiale, som er relevant for det pågældende projekt.
+
+R ligger en `.Rproj`-fil i den mappe, som man laver til R Projekt. Denne bruges til nemt at skifte arbejdssti til projektet.
+
+
+## ØVELSE: Lav et R Projekt
+
+1. Lav et R Projekt
+
+3. Lav et script, der danner følgende objekter:
+
+`navn1`: `"araya"`
+
+`navn2`: `"townsend"`
+
+`aar1`: `1961` (uden anførselstegn)
+
+`aar2`: `"1972"` (med anførselstegn)
+
+Et objekt, der indeholder alder for `aar1` (2023 - `aar1`)
+
+En vector, der indeholder årene mellem 1960 og 2023 (`c(1960:2023)`)
+
+En vector, der indeholder aldrene for folk født mellem 1960-2023 (`2023 - c(1960:2023)`)
+
+
+## Funktioner
+
+Funktioner er kommandoer brugt til at transformere objekter på en eller anden måde og give et output.
+
+Det, som man sætter i funktionen, kaldes et "argument" eller "input". Antallet af argumenter varierer mellem funktioner.
+
+Funktioner har alle den samme opbygning: 
+
+`funktionsnavn(arg1, arg2, arg3)`
+
+- *funktionsnavn med argumenterne i parentes adskilt med kommaer*
+
+Nogle argumenter er krævede, mens andre er valgfrie. Man kan altid konsultere hjælpefil for at se, hvilke argumenter en funktion har (`?funktionsnavn`).
+
+## Funktioner
+
+::: {.columns align="center"}
+::: {.column width="50%"}
+**Funktion:**
+
+Mikrobølgeovn\
+\
+**Krævet argument:**
+
+Det der skal tilberedes\
+\
+**Valgfrie argumenter:**
+
+Mikrobølgeovnens indstillinger
+:::
+
+::: {.column width="50%"}
+![](img/microwave.jpg){fig-align="center" width="100%"}
+:::
+:::
+
+\
+\
+
+```{r}
+#| eval: false
+microwave(squash, watts = 750, time = 2)
+```
+
+
+## Funktioner
+
+Funktioner ændrer aldrig et objekt. Når man bruger en funktion, beder man R om at se et output, men ikke om at ændre noget (hvordan ser min squash ud, når den har været i mikroovnen?).
+
+Hvis man vil ændre et objekt, skal man derfor lagre outputtet i et nyt eller eksisterende objekt (jeg vil gerne erstatte min squash med den, som har været i mikroovonen).
+
+
+## Brug af betingelser i R - logiske værdier
+
+En lang række kommandoer og funktioner i R vil returnere *logiske værdier*.
+
+Logiske værdier kan kun være `TRUE` eller `FALSE` (eller missing/`NA`).
+
+Bruger man fx disse operatorer i R, returneres altid en logisk værdi:
+
+|**Operator**|**Betydning**|
+|--|--|
+|`>` | Større end |
+|`>=`| Større end eller lig med |
+|`<` | Mindre end | 
+|`<=`| Mindre end eller lig med | 
+|`==`| Lig med |
+|`!=`| Ikke lig med |
+|`%in%`| Er værdi del af værdisamling?|
+
+
+## ØVELSE: Funktioner
+
+1. Brug funktionen `mean()` til at udregne gennemsnit af din aldersvector
+
+2. Brug funktionen `gsub()` til at skifte det lille "t" i `navn2` ud med stort "T" (se hjælpefilen).
+
+3. Spørg R om hhv. `aar1` og `aar2` indgår i din vector med årene 1960-2023 (`x %in% y`)
+
+
+## Classes (datatyper)
+
+R adskiller mellem objekter via deres "class".
+
+En "class" er R's måde at holde styr på, hvilken type af information, som objektet indeholder.
+
+En class sætter samtidig betingelserne for, hvad der kan lade sig gøre med objektet (fx at vi kan lave udregninger med tal, men at vi ikke kan det med tekst).
+
+
+## Classes (datatyper)
+
+![](img/classes-shapes.jpg){fig-align="center" width="85%"}
+
+
+## Pakker
+
+Fordi R er "open source", bliver der konstant tilføjet nye funktioner til R. Funktioner, som andre har lavet, kan læses ind via "R pakker", som kan gøres til del af ens "R bibliotek".
+
+R adskiller mellem installation og indlæsning. Dette for at undgå konflikter mellem pakker.
+
+Man behøver kun at installere pakker én gang.
+
+Pakker, som bruges i et script, indlæses i starten af scriptet.
+
+
+## Pakker
+
+::: {.columns align="center"}
+::: {.column width="50%" align="center"}
+### Basis R
+
+\
+![](img/robot.png){fig-align="center" height="50%"}
+:::
+
+::: {.column width="50%" align="center"}
+### R pakker
+
+\
+![](img/robot-parts.png){fig-align="center" height="50%"}
+:::
+:::
+
+## Introduktion til tidyverse
+
+[Tidyverse](https://www.tidyverse.org/) er en samling af pakker til R, der letter arbejdet med at indlæse, håndtere og arbejde med data.
+
+Pakkerne fra Tidyverse har den fordel, at de alle følger den samme designfilosofi og opbygning i deres funktioner.
+
+Vi vil i disse R introduktioner primært bruge funktioner fra tidyverse til data- og variabelhåndtering.
+
+Alle pakker fra `tidyverse` kan installeres og indlæses på én gang:
+
+-   `install.packages('tidyverse')`
+-   `library(tidyverse)`
+
+Læs mere om tidyverse og se guides på: [https://www.tidyverse.org/](https://www.tidyverse.org/).
+
+
+## Indlæsning af data
+
+R kan arbejde med data på mange forskellige måder.
+
+For at R kan arbejde med data, skal data indlæses i en af R's *datastrukturer*.
+
+Datasæt kan eksistere i mange forskellige former. Måden vi indlæser data i R, skal derfor hænge sammen med den form og det format, som data har "uden for R".
+
+
+## Data frames
+
+En "data frame" er en datastruktur i R, som bruges til at håndtere data i tabelformat (data i rækker og kolonner).
+
+For R er en data frame bare endnu et objekt af en bestemt type (class).
+
+Fordi data frames blot er objekter, kan man arbejde med så mange data frames ad gangen, som man har lyst til.
+
+Af samme grund er man nødt til at fortælle R, når man vil gøre noget med information, som befinder sig i en bestemt data frame.
+
+
+## Indlæsning af data - tabeldata
+
+```{r}
+#| echo: false
+#| warning: false
+
+library(tidyverse)
+library(knitr)
+
+read_csv("https://github.com/RolfLund/4semesterR/raw/master/teaching-materials/r-intro/datasets/ESS2018DK_subset.csv") |> 
+  select(idno, yrbrn, gndr, eduyrs, wkhtot, health) |> 
+  head() |> 
+  kable()
+```
+
+
+## Indlæsning af data - csv-filer
+
+    idno,yrbrn,gndr,eduyrs,wkhtot,health
+    5816,1974,Male,35,37,Good
+    7251,1975,Female,13,34,Fair
+    7887,1958,Male,25,39,Fair
+    9607,1964,Female,13,34,Good
+    11688,1952,Female,2,37,Very bad
+    12355,1963,Male,14,37,Fair
+
+
+## ØVELSE: Indlæs data
+
+::: {.columns align="center"}
+::: {.column width="70%" align="center"}
+
+1. Lav en undermappe til data i dit R Projekt\
+\
+2. Hent datasæt ned i din datamappe\
+\
+  - Data findes på: [bit.ly/sofia-r-data-jan23](https://bit.ly/sofia-r-data-jan23)\
+\
+  - Højreklik på "Raw" og vælg "Gem som" -> Læg i din datamappe\
+\
+3. Indlæs datasæt som dataframe i R med `read_csv()`
+
+:::
+::: {.column width="30%" align="center"}
+
+![](img/data-qr.png){fig-align="center" width="100%"}
+
+:::
+:::
+
+## Vectors og enkeltvariable
+
+For R er værdier (tal, tekst, osv.) *altid* vectors.
+
+Selv objekter, der blot består af ét tal, behandler R som en vector (en vector bestående af én talværdi).
+
+Derfor virker kommandoer og funktioner i R ens, uanset om de bruges på enkelte tal, enkelte vectors eller enkelte kolonner i en data frame.
+
+
+## Missingværdier
+
+Data vil ofte indeholde missing-værdier. Missing-værdier angiver ikke-gyldige værdier; fx et manglende svar, ugyldigt svar, information der ikke kunne skaffes eller lignende.
+
+Missing-værdier bruges til at give en værdi uden at give en værdi (cellerne skal indeholde noget). På den måde er man ikke nødt til at fjerne hele rækker fra datasættet, selvom der mangler oplysninger.
+
+I R angives missing-værdier med `NA` og er hverken høje eller lave.
+
+
+## ØVELSE: Deskriptive mål
+
+1. Udregn gennemsnitsværdi (`mean()`) for `netustm` (minutter på internettet om dagen) i ESS18 datasættet
+
+*BEMÆRK*: Variabel indeholder muligvis missing! Tjek hjælpefil for at se, om der er en måde at tage højde for dette.
+
+
+## Datahåndtering med tidyverse
+
+Pakkerne i `tidyverse` indeholder primært funktioner til datahåndtering (udvælge rækker, kolonner, ændre variable osv.).
+
+Funktioner i `tidyverse` følger den samme opbygning, hvor data altid er første argument: 
+
+- `tidyversefunction(dataframe, arg1, arg2)`
+
+Nogle centrale funktioner er blandt andet:
+
+- `filter()` til at selektere rækker
+- `select()` til at vælge kolonner
+- `mutate()` til at lave og ændre variable
+
+
+## Visualisering med ggplot2
+
+R (eller mere specifikt `ggplot2`) er rost for de mange måder, som man kan danne og tilpasse visualiseringer af data.
+
+Pakken `ggplot2` er en del af `tidyverse` og bruges til at lave visualiseringer af data. Funktionerne i `ggplot2` gør det muligt at tilpasse nærmest alt, og understøtter mange typer af visualisering.
+
+Overordnet set fungerer ggplot ved, at man først angiver, hvad der skal visualiseres (data og “aesthetics”), hvorefter man angiver, hvordan det skal visualiseres (“geom”).
+
+## Visualisering med ggplot2
+
+Som hovedregel følger et ggplot denne skabelon:
+
+```{r}
+#| eval: false
+
+ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) + 
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```
+
+- **ggplot**: Hovedfunktion. Hvad skal visualisering indeholde?
+  - *data*: Hvilket datasæt skal visualiseres?
+  - *mapping*: Hvilke informationer fra data skal “mappes” til visualiseringen? (gives ved `aes()` - fx `aes(x = 'alder', y = 'månedsløn')`)
+- **GEOM_FUNCTION**: Hvordan skal data visualiseres? (hvilken *geometrisk* repræsentation? - prikker, linjer, bjælker osv.)
+
+
+## ØVELSE: Visualisering
+
+1. Dan et subset (ny data frame), der kun indeholder mændene i ESS18 sættet (brug `filter()` og variablen `gndr`).
+
+2. Dan et punktdiagram (`geom_point()`) over fødselsår (`yrbrn`) og tid brugt på internettet (`netustm`). Brug fødselsår til x-akse og tid brugt på internettet som y-akse.
+
+3. Dan det samme punktdiagram for kvinderne.
+
+4. Dan det samme punktdiagram for hele datasættet, men hvor køn tilføjes som `colour` aesthetic.
